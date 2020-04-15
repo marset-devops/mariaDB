@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-MAINTAINER Fernando Marset <fernando.marset@gmail.com>
+LABEL maintainer="Fernando Marset <fernando.marset@gmail.com>"
 
 # Install main packages.
 RUN apt-get update && apt-get -y upgrade
