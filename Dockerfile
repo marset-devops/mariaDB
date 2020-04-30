@@ -29,7 +29,7 @@ RUN wget "https://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBac
 RUN tar xvfz /tmp/install/automysqlbackup.tar.gz -C /tmp/install/
 RUN mv /tmp/install/automysqlbackup /usr/local/bin/
 RUN rm -rf /tmp/install/
-COPY ./automysqlbackup.conf /etc/automysqlbackup/automysqlbackup.conf
+COPY automysqlbackup.conf /etc/automysqlbackup/automysqlbackup.conf
 RUN echo "# Custom crontab jobs" >> /etc/crontab
 RUN echo "# Dump backup every day " >> /etc/crontab
 RUN echo "30 0 * * *       root    /usr/local/bin/automysqlbackup >/dev/null 2>&1" >> /etc/crontab
