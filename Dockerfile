@@ -27,10 +27,10 @@ RUN wget "https://downloads.sourceforge.net/project/automysqlbackup/AutoMySQLBac
 RUN tar xvfz /tmp/install/automysqlbackup.tar.gz -C /tmp/install/
 RUN mv /tmp/install/automysqlbackup /usr/local/bin/
 RUN rm -rf /tmp/install/
-ADD automysqlbackup.conf /etc/automysqlbackup/automysqlbackup.conf
+COPY ./automysqlbackup.conf /etc/automysqlbackup/automysqlbackup.conf
 RUN echo "# Custom crontab jobs" >> /etc/crontab
-RUN echo "# Dump backup every hour " >> /etc/crontab
-RUN echo "0 * * * *       root    /usr/local/bin/automysqlbackup >/dev/null 2>&1" >> /etc/crontab
+RUN echo "# Dump backup every day " >> /etc/crontab
+RUN echo "30 0 * * *       root    /usr/local/bin/automysqlbackup >/dev/null 2>&1" >> /etc/crontab
 RUN echo "# Optimize tables" >> /etc/crontab
 RUN echo "0 0 * * *       root    /usr/bin/mysqlcheck -o --all-databases >/dev/null 2>&1" >> /etc/crontab
 
@@ -40,7 +40,7 @@ RUN wget http://mysqltuner.pl/ -O /usr/local/bin/mysqltuner.pl
 RUN chmod +x /usr/local/bin/mysqltuner.pl
 RUN wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/basic_passwords.txt -O /usr/local/bin/basic_passwords.txt
 RUN wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/vulnerabilities.csv -O /usr/local/bin/vulnerabilities.csv
-ADD tuner.sh /usr/local/bin/tuner.sh
+COPY tuner.sh /usr/local/bin/tuner.sh
 RUN chmod +x /usr/local/bin/tuner.sh
 
 RUN echo "# Daily tuner job" >> /etc/crontab
@@ -57,7 +57,7 @@ RUN tar -czvf /root/log.tar.gz /var/log/
 VOLUME ["/etc/mysql", "/var/lib/mysql","/var/backups","/var/log"]
 
 ##custom entry point — needed by cron
-ADD entrypoint /entrypoint
+COPY entrypoint /entrypoint
 RUN chmod +x /entrypoint
 RUN dos2unix /entrypoint
 ENTRYPOINT ["/entrypoint"]
