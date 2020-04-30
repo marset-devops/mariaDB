@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 LABEL maintainer="Fernando Marset <fernando.marset@gmail.com>"
+LABEL name="MariaDB"
+LABEL version="1.0"
 
 # Install main packages.
 RUN apt-get update && apt-get -y upgrade
